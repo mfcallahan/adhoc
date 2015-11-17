@@ -22,8 +22,11 @@ namespace FileCleanup
 
             foreach (var f in folders)
             {
+                if (f.StartsWith("//", StringComparison.CurrentCulture) || string.IsNullOrWhiteSpace(f))
+                    continue;
+
                 var folder = f.Split(',')[0];
-                var days = int.Parse(f.Split(',')[1]);
+                var days = -Math.Abs(int.Parse(f.Split(',')[1]));
 
                 try
                 {                   
