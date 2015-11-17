@@ -25,8 +25,8 @@ namespace FileCleanup
                 if (f.StartsWith("//", StringComparison.CurrentCulture) || string.IsNullOrWhiteSpace(f))
                     continue;
 
-                var folder = f.Split(',')[0];
-                var days = -Math.Abs(int.Parse(f.Split(',')[1]));
+                var folder = f.Split(',')[0].Trim();
+                var days = -Math.Abs(int.Parse(f.Split(',')[1].Trim()));
 
                 try
                 {                   
