@@ -1,0 +1,6 @@
+C:\GitHub\adhoc\src\FileCleanup\FileBackup\bin\Debug\FileBackup.exe.config
+C:\GitHub\adhoc\src\FileCleanup\FileBackup\bin\Debug\FileBackup.exe
+C:\GitHub\adhoc\src\FileCleanup\FileBackup\bin\Debug\FileBackup.pdb
+C:\GitHub\adhoc\src\FileCleanup\FileBackup\obj\Debug\FileBackup.exe
+C:\GitHub\adhoc\src\FileCleanup\FileBackup\obj\Debug\FileBackup.pdb
+C:\GitHub\adhoc\src\FileCleanup\FileBackup\obj\Debug\FileBackup.csprojResolveAssemblyReference.cache

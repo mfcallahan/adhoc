@@ -1,0 +1,11 @@
+C:\GitHub\FileCleanup\FileCleanup\bin\Debug\FileCleanup.exe.config
+C:\GitHub\FileCleanup\FileCleanup\bin\Debug\FileCleanup.exe
+C:\GitHub\FileCleanup\FileCleanup\bin\Debug\FileCleanup.pdb
+C:\GitHub\FileCleanup\FileCleanup\obj\Debug\FileCleanup.exe
+C:\GitHub\FileCleanup\FileCleanup\obj\Debug\FileCleanup.pdb
+C:\GitHub\adhoc\src\FileCleanup\FileCleanup\bin\Debug\FileCleanup.exe.config
+C:\GitHub\adhoc\src\FileCleanup\FileCleanup\obj\Debug\FileCleanup.exe
+C:\GitHub\adhoc\src\FileCleanup\FileCleanup\obj\Debug\FileCleanup.pdb
+C:\GitHub\adhoc\src\FileCleanup\FileCleanup\bin\Debug\FileCleanup.exe
+C:\GitHub\adhoc\src\FileCleanup\FileCleanup\bin\Debug\FileCleanup.pdb
+C:\GitHub\adhoc\src\FileCleanup\FileCleanup\obj\Debug\FileCleanup.csprojResolveAssemblyReference.cache

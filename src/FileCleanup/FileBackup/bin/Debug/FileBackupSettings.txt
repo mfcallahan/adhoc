@@ -6,7 +6,7 @@
 
 
 //Documents
-C:\Users\matth\Documents,\\MEDIA-PC\Z\Documentss
+C:\Users\matth\Documents,\\MEDIA-PC\Z\Documents
 
 //Pictures
 C:\Users\matth\OneDrive\Pictures,\\MEDIA-PC\Z\Pictures
@@ -16,4 +16,4 @@ C:\Users\matth\Music,\\MEDIA-PC\Z\Music
 C:\Users\matth\Music,\\MEDIA-PC\Media\Music
 
 //GitHub
-C:\GitHub\,C:\Users\matth\OneDrive\GitHub_backup
+C:\GitHub,C:\Users\matth\OneDrive\GitHub_backup

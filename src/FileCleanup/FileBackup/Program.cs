@@ -9,8 +9,26 @@ namespace FileBackup
 {
     class Program
     {
+        static List<string> noSource = new List<string>();
+        static List<string> notCopied = new List<string>();
+
+        private static string[] ignoreFiles =
+        {
+            "Thumbs.db",
+            "gitconfig",            
+            ".gitignore",
+            ".gitattributes"
+        };
+
+        private static string[] ignoreDirs =
+        {
+            ".git",
+            "_nocopy"
+        };
+
         static void Main()
         {
+            Console.WriteLine("FileBackup.exe begin.");
             if (!File.Exists(AppDomain.CurrentDomain.BaseDirectory + "FileBackupSettings.txt"))
             {
                 Console.WriteLine(@"FileCleanup.exe error: ""FileBackupSettings.txt"" not found.");
@@ -18,7 +36,7 @@ namespace FileBackup
                 return;
             }
 
-            var folders = GetSettings();
+            var folders = GetSettings();           
 
             foreach (var f in folders)
             {
@@ -28,21 +46,37 @@ namespace FileBackup
                 var source = f.Split(',')[0].Trim();
                 var target = f.Split(',')[1].Trim();
 
-                try
+                if(!Directory.Exists(source))
                 {
-                    Console.WriteLine("Backing up files in " + source + Environment.NewLine);
-                    CopyFiles(source, target);
+                    noSource.Add(source);
+                    continue;
+                }
 
-                }
-                catch (Exception ex)
+                if (!Directory.Exists(target))
                 {
-                    Console.WriteLine("Error copying files from" + source + " to " + target + Environment.NewLine);
-                    Console.WriteLine(ex.ToString());
-                    Console.ReadLine();
-                    return;
+                    Directory.CreateDirectory(target);
                 }
+
+                Console.WriteLine("Backing up files from: " + source);
+                CopyFiles(source, target);
             }
 
+            if (noSource.Count > 0)
+            {
+                Console.WriteLine("WARNING - Could not copy from these locations, folder does not exist:");
+                foreach (string f in noSource)
+                    Console.WriteLine(f);
+            }
+
+            if (notCopied.Count > 0)
+            {
+                Console.WriteLine("WARNING - Could not copy these files:");
+                foreach (string f in notCopied)
+                    Console.WriteLine(f);
+            }
+
+            Console.WriteLine("FileBackup.exe complete.");
+            Console.ReadLine();
 
         }//end main
 
@@ -52,7 +86,8 @@ namespace FileBackup
         }
 
         static void CopyFiles(string sourcePath, string destinationPath)
-        {
+        {           
+
             //bool dirExisted = DirExists(destinationPath);
             //create destination directory if not exist
             if (!Directory.Exists(destinationPath))
@@ -63,26 +98,37 @@ namespace FileBackup
 
             foreach (string sourceFile in srcFiles)
             {
+                foreach (string f in ignoreFiles)
+                {
+                    if (sourceFile.Contains(f))
+                        goto Skip;
+                }
+
                 FileInfo sourceInfo = new FileInfo(sourceFile);
-
-                if (sourceInfo.Name == "Thumbs.db")
-                    continue;
-
                 string destFile = Path.Combine(destinationPath, sourceInfo.Name);
 
-                if (File.Exists(destFile))
+                try
                 {
-                    FileInfo destInfo = new FileInfo(destFile);
-                    if (sourceInfo.LastWriteTime > destInfo.LastWriteTime)
+                    if (File.Exists(destFile))
                     {
-                        //file is newer, so copy it
-                        File.Copy(sourceFile, Path.Combine(destinationPath, sourceInfo.Name), true);
+                        FileInfo destInfo = new FileInfo(destFile);
+                        if (sourceInfo.LastWriteTime > destInfo.LastWriteTime)
+                        {
+                            //file is newer, so copy it
+                            File.Copy(sourceFile, Path.Combine(destinationPath, sourceInfo.Name), true);
+                        }
+                    }
+                    else
+                    {
+                        File.Copy(sourceFile, Path.Combine(destinationPath, sourceInfo.Name));
                     }
                 }
-                else
+                catch (Exception ex)
                 {
-                    File.Copy(sourceFile, Path.Combine(destinationPath, sourceInfo.Name));
+                    notCopied.Add(sourceInfo.FullName + " can't be copied: " + ex.Message);
                 }
+
+                Skip:;
 
             }
 
@@ -90,8 +136,15 @@ namespace FileBackup
             string[] dirs = Directory.GetDirectories(sourcePath);
             foreach (string dir in dirs)
             {
+                foreach (string f in ignoreDirs)
+                {
+                    if (dir.Contains(f))
+                        goto Skip;
+                }
+
                 DirectoryInfo dirInfo = new DirectoryInfo(dir);
                 CopyFiles(dir, Path.Combine(destinationPath, dirInfo.Name));
+                Skip:;
             }
         }
 
