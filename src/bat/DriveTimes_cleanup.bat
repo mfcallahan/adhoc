@@ -1,0 +1,1 @@
+forfiles -p "Q:\DriveTimes" -s -m *.* /D -<30> /C "cmd /c del @path"
