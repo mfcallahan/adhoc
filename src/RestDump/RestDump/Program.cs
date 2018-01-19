@@ -8,7 +8,7 @@ namespace RestDump
         static void Main(string[] args)
         {
             string url = ConfigurationManager.AppSettings["featureServiceUrl"];
-            string oidField = ConfigurationManager.AppSettings["objectIdField"];
+            string oidField = ConfigurationManager.AppSettings["objectIdField"]; 
             int queryLimit = Math.Abs(int.Parse(ConfigurationManager.AppSettings["queryLimit"]));
 
             Console.WriteLine("Dumping layer: " + url);
