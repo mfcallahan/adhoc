@@ -1,5 +1,5 @@
 ﻿using System;
-using System.IO;
+using System.Configuration;
 
 namespace RestDump
 {
@@ -7,15 +7,16 @@ namespace RestDump
     {
         static void Main(string[] args)
         {
-            // test feature service: NOAA Weather Stations 
-            string url = "http://maps1.arcgisonline.com/ArcGIS/rest/services/NWS_Weather_Stations/MapServer/2";
-            string oidField = "OBJECTID_1";
+            string url = ConfigurationManager.AppSettings["featureServiceUrl"];
+            string oidField = ConfigurationManager.AppSettings["objectIdField"];
+            int queryLimit = Math.Abs(int.Parse(ConfigurationManager.AppSettings["queryLimit"]));
 
             Console.WriteLine("Dumping layer: " + url);
 
             EsriFfeatureLayer table = new EsriFfeatureLayer();
-            table.DumpFeatureTable(url, oidField);
-            table.WriteFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "feature_dump.csv"));
+            
+            table.DumpFeatureTable(url, oidField, queryLimit);
+            table.WriteFile(ConfigurationManager.AppSettings["outputFile"]);
 
 
             Console.WriteLine("Complete!");
