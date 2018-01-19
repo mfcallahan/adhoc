@@ -36,7 +36,7 @@ namespace RestDump
             WriteCsv(outputFilePath);
         }
 
-        public void DumpFeatureTable(string url, string oidField)
+        public void DumpFeatureTable(string url, string oidField, int featureLimit)
         {
             TableIds ids = TableIds.GetAllIds(url);
             List<DataTable> tableList = new List<DataTable>();
@@ -65,7 +65,7 @@ namespace RestDump
             // multi-thread dump
 
             ids.objectIds.Sort();
-            IEnumerable<List<int>> idChunks = ids.objectIds.SplitList(500);
+            IEnumerable<List<int>> idChunks = ids.objectIds.SplitList(featureLimit);
 
             
             Parallel.ForEach(idChunks, new ParallelOptions { MaxDegreeOfParallelism = 20 }, (chunk) =>
