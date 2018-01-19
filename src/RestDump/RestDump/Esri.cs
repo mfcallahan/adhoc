@@ -65,8 +65,8 @@ namespace RestDump
 
             // multi-thread dump
 
-            ids.objectIds.Sort();
-            IEnumerable<List<int>> idChunks = ids.objectIds.SplitList(featureLimit);
+            ids.ObjectIds.Sort();
+            IEnumerable<List<int>> idChunks = ids.ObjectIds.SplitList(featureLimit);
 
             
             Parallel.ForEach(idChunks, new ParallelOptions { MaxDegreeOfParallelism = 20 }, (chunk) =>
@@ -182,8 +182,8 @@ namespace RestDump
 
     class TableIds
     {
-        public string objectIdFieldName { get; set; }
-        public List<int> objectIds { get; set; }
+        public string OidFieldName { get; set; }
+        public List<int> ObjectIds { get; set; }
 
         public static TableIds GetAllIds(string url)
         {
