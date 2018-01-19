@@ -41,38 +41,15 @@ namespace RestDump
             TableIds ids = TableIds.GetAllIds(url);
             List<DataTable> tableList = new List<DataTable>();
 
-            foreach(int id in ids.objectIds)
-            {
-                Console.WriteLine("OBJECTID: " + id);
+            // single thread dump
 
-                string queryUrl = url + "/query?where=" + oidField + "=" + id + "&text=&objectIds=&time=&geometry=&geometryType=esriGeometryPoint&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=*&returnGeometry=false&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=&outSR=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&resultOffset=&resultRecordCount=&f=pjson";
-                string json;
-
-                using (WebClient w = new WebClient())
-                {
-                    StreamReader sr = new StreamReader(w.OpenRead(queryUrl));
-                    json = sr.ReadToEnd();
-                    sr.Close();
-                }
-
-                DataTable t = DeserializeTable(json);
-                tableList.Add(t);
-            }
-
-            //ids.objectIds.Sort();
-            //IEnumerable<List<int>> idChunks = ids.objectIds.SplitList(500);            
-
-            ////query feature table on concurrent threads
-            //Parallel.ForEach(idChunks, new ParallelOptions { MaxDegreeOfParallelism = 20 }, (chunk) =>
+            //foreach(int id in ids.objectIds)
             //{
-            //    int idLow = chunk.First();
-            //    Debug.WriteLine("idLow = " + idLow);
-            //    int idHigh = chunk.Last();
-            //    Debug.WriteLine("idHigh = " + idHigh);
+            //    Console.WriteLine("OBJECTID: " + id);
 
-            //    string queryUrl = url + "/query?where=" + oidField + ">=" + idLow + "+AND+" + oidField + "<=" + idHigh + "&text=&objectIds=&time=&geometry=&geometryType=esriGeometryPoint&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=*&returnGeometry=false&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=&outSR=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&resultOffset=&resultRecordCount=&f=pjson";
+            //    string queryUrl = url + "/query?where=" + oidField + "=" + id + "&text=&objectIds=&time=&geometry=&geometryType=esriGeometryPoint&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=*&returnGeometry=false&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=&outSR=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&resultOffset=&resultRecordCount=&f=pjson";
             //    string json;
-            //    Debug.WriteLine("queryUrl = " + queryUrl);
+
             //    using (WebClient w = new WebClient())
             //    {
             //        StreamReader sr = new StreamReader(w.OpenRead(queryUrl));
@@ -82,7 +59,35 @@ namespace RestDump
 
             //    DataTable t = DeserializeTable(json);
             //    tableList.Add(t);
-            //});
+            //}
+
+
+            // multi-thread dump
+
+            ids.objectIds.Sort();
+            IEnumerable<List<int>> idChunks = ids.objectIds.SplitList(500);
+
+            
+            Parallel.ForEach(idChunks, new ParallelOptions { MaxDegreeOfParallelism = 20 }, (chunk) =>
+            {
+                int idLow = chunk.First();
+                Debug.WriteLine("idLow = " + idLow);
+                int idHigh = chunk.Last();
+                Debug.WriteLine("idHigh = " + idHigh);
+
+                string queryUrl = url + "/query?where=" + oidField + ">=" + idLow + "+AND+" + oidField + "<=" + idHigh + "&text=&objectIds=&time=&geometry=&geometryType=esriGeometryPoint&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=*&returnGeometry=false&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=&outSR=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&resultOffset=&resultRecordCount=&f=pjson";
+                string json;
+                Debug.WriteLine("queryUrl = " + queryUrl);
+                using (WebClient w = new WebClient())
+                {
+                    StreamReader sr = new StreamReader(w.OpenRead(queryUrl));
+                    json = sr.ReadToEnd();
+                    sr.Close();
+                }
+
+                DataTable t = DeserializeTable(json);
+                tableList.Add(t);
+            });
 
             //merge all tables
             DataTable mergedTable = new DataTable();
