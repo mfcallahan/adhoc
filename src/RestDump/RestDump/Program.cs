@@ -13,10 +13,10 @@ namespace RestDump
 
             Console.WriteLine("Dumping layer: " + url);
 
-            EsriFfeatureLayer table = new EsriFfeatureLayer();
-            
-            table.DumpFeatureTable(url, oidField, queryLimit);
-            table.WriteFile(ConfigurationManager.AppSettings["outputFile"]);
+            EsriFeatureLayer layer = new EsriFeatureLayer();
+
+            layer.DumpFeatureTable(url, oidField, queryLimit);
+            layer.WriteFile(ConfigurationManager.AppSettings["outputFile"]);
 
 
             Console.WriteLine("Complete!");

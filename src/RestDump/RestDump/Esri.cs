@@ -13,16 +13,16 @@ using System.Web.Script.Serialization;
 
 namespace RestDump
 {
-    public class EsriFfeatureLayer
+    public class EsriFeatureLayer
     {
         public DataTable Table { get; set; }
 
-        public EsriFfeatureLayer()
+        public EsriFeatureLayer()
         {
 
         }
 
-        public EsriFfeatureLayer(string json)
+        public EsriFeatureLayer(string json)
         {
             Table = DeserializeSelection(json);
         }
@@ -90,7 +90,7 @@ namespace RestDump
                 tableList.Add(t);
             });
 
-            //merge all tables
+            // merge all tables
             DataTable mergedTable = new DataTable();
             tableList.ForEach(mergedTable.Merge);
 
@@ -99,21 +99,21 @@ namespace RestDump
 
         DataTable DeserializeTable(string json)
         {
-            //Json string to dynamic object
+            // Json string to dynamic object
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             dynamic tableObj = serializer.Deserialize<object>(json);
 
-            //get features
+            // get features
             List<Dictionary<string, object>> features = new List<Dictionary<string, object>>();
             foreach (var feature in tableObj["features"])
                 features.Add(feature);
 
-            //get just the attributes form the features
+            // get just the attributes form the features
             List<Dictionary<string, object>> attributes = new List<Dictionary<string, object>>();
             foreach (var feature in features)
                 attributes.Add((Dictionary<string, object>)feature["attributes"]);
 
-            //get column names from first row, all rows will have identical schema
+            // get column names from first row, all rows will have identical schema
             IEnumerable<string> colNames = new List<string>(attributes[0].Keys);
 
             return MakeTable(colNames, attributes);
@@ -121,16 +121,16 @@ namespace RestDump
 
         DataTable DeserializeSelection(string json)
         {
-            //Json string to dynamic object
+            // Json string to dynamic object
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             dynamic tableObj = serializer.Deserialize<object>(json);
 
-            //dynamic object to List<Dictionary<string, object> containing column, value for each row
+            // dynamic object to List<Dictionary<string, object> containing column, value for each row
             List<Dictionary<string, object>> data = new List<Dictionary<string, object>>();
             foreach (var row in tableObj)
                 data.Add(row);
 
-            //get column names from first row, all rows will have identical schema
+            // get column names from first row, all rows will have identical schema
             IEnumerable<string> colNames = new List<string>(data[0].Keys);
 
             return MakeTable(colNames, data);
@@ -140,7 +140,7 @@ namespace RestDump
         {
             DataTable table = new DataTable();
 
-            //add DataTable columns
+            // add DataTable columns
             foreach (string col in colNames)
                 table.Columns.Add(col, typeof(string));
 
@@ -165,11 +165,11 @@ namespace RestDump
         {
             StringBuilder sb = new StringBuilder();
 
-            //write column names
+            // write column names
             IEnumerable<string> colNames = Table.Columns.Cast<DataColumn>().Select(columns => columns.ColumnName);
             sb.AppendLine(string.Join(",", colNames.Select(s => string.Format("\"{0}\"", s))));
 
-            //write rows, all vlaues enclosed in quotes
+            // write rows, all vlaues enclosed in quotes
             foreach (DataRow row in Table.Rows)
             {
                 IEnumerable<string> rowValues = row.ItemArray.Select(rows => rows.ToString()).ToList();
@@ -187,7 +187,7 @@ namespace RestDump
 
         public static TableIds GetAllIds(string url)
         {
-            //select all, return only the IDs
+            // select all, return only the IDs
             url += "/query?where=1%3D1&text=&objectIds=&time=&geometry=&geometryType=esriGeometryPoint&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=*&returnGeometry=false&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=&outSR=&returnIdsOnly=true&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&resultOffset=&resultRecordCount=&f=pjson";
             string json;
 
