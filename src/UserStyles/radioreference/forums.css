@@ -1,0 +1,4 @@
+div[id^='post_message'] img
+{
+	max-width: 100%
+}
