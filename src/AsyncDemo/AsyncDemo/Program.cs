@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace AsyncDemo
@@ -15,29 +16,45 @@ namespace AsyncDemo
             Console.WriteLine();
 
             // start long running data fethcing operations
-            Task<string> taskDataA = SampleDataLayer.MethodA();
-            Task<int> taskDataB = SampleDataLayer.MethodB();
+            Task<string> dataB = SampleDataLayer.GetDelayedResponse(8);
+            Task<string> dataA = SampleDataLayer.SimulateLongProcess(4);            
 
-            // do synchronous stuff which doesn't need the result of MethodA() or MethodB()
-            int dataC = SampleDataLayer.MethodC();
+            // do synchronous work which doesn't need the result of dataA or dataB
+            int dataC = SampleDataLayer.Foo();
 
             // now call await on the tasks
             Console.WriteLine("Awaiting...");
-            SampleDataResponse response = new SampleDataResponse()
+            SampleData data = new SampleData()
             {
-                A = await taskDataA,
-                B = await taskDataB,
+                A = await dataA,
+                B = await dataB,
                 C = dataC
             };
 
-            Console.WriteLine("SampleDataResponse obj created:");
-            Console.WriteLine("response.A = {0}", response.A);
-            Console.WriteLine("response.B = {0}", response.B);
-            Console.WriteLine("response.C = {0}", response.C);
+            Console.WriteLine("SampleData obj created:");
+            Console.WriteLine("response.A = {0}", data.A);
+            Console.WriteLine("response.B = {0}", data.B);
+            Console.WriteLine("response.C = {0}", data.C);
 
             Console.WriteLine();
             Console.WriteLine("Complete.");
             Console.ReadLine();
         }
+
+        void RunAsync()
+        {
+            Stopwatch s = new Stopwatch();
+            s.Start();
+
+            s.Stop();
+        }
+
+        void RunSync()
+        {
+            Stopwatch s = new Stopwatch();
+            s.Start();
+
+            s.Stop();
+        }        
     }
 }
