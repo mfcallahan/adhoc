@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace AsyncDemo
@@ -9,35 +10,33 @@ namespace AsyncDemo
         // https://stackoverflow.com/questions/13002507/how-can-i-call-async-go-method-in-for-example-main
         // https://stackoverflow.com/questions/9343594/how-to-call-asynchronous-method-from-synchronous-method-in-c
 
-        static async Task Main(string[] args)
+        static async Task Main()
         {
             Console.WriteLine("App start.");
-            Console.WriteLine();
 
-            // start long running data fethcing operations
-            Task<string> taskDataA = SampleDataLayer.MethodA();
-            Task<int> taskDataB = SampleDataLayer.MethodB();
+            // start long running asynchronous data fethcing work
+            Task<string> dataA = SampleDataLayer.GetDelayedResponse(8);
+            Task<string> dataB = SampleDataLayer.SimulateLongProcess(4);
 
-            // do synchronous stuff which doesn't need the result of MethodA() or MethodB()
-            int dataC = SampleDataLayer.MethodC();
+            // start synchronous work which doesn't need the result of dataA or dataB
+            int dataC = SampleDataLayer.Foo();
 
             // now call await on the tasks
             Console.WriteLine("Awaiting...");
-            SampleDataResponse response = new SampleDataResponse()
+            SampleData data = new SampleData()
             {
-                A = await taskDataA,
-                B = await taskDataB,
+                A = await dataA,
+                B = await dataB,
                 C = dataC
             };
 
-            Console.WriteLine("SampleDataResponse obj created:");
-            Console.WriteLine("response.A = {0}", response.A);
-            Console.WriteLine("response.B = {0}", response.B);
-            Console.WriteLine("response.C = {0}", response.C);
+            Console.WriteLine("SampleData obj created:");
+            Console.WriteLine("response.A = {0}", data.A);
+            Console.WriteLine("response.B = {0}", data.B);
+            Console.WriteLine("response.C = {0}", data.C);
 
-            Console.WriteLine();
             Console.WriteLine("Complete.");
             Console.ReadLine();
-        }
+        }        
     }
 }
