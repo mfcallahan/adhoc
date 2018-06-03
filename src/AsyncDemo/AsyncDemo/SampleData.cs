@@ -6,34 +6,34 @@ namespace AsyncDemo
 {
     public static class SampleDataLayer
     {
-        static readonly string _apiUrl = "http://mfcallahan.com/api/GetDelayedResponse?s=";
+        static readonly string _apiUrl = "http://mfcallahan.com/api/GetDelayedResponse?waitSeconds=";
 
-        // method to simulate a long running HTTP request
+        // async method to simulate long running HTTP request
         public async static Task<string> GetDelayedResponse(int seconds)
         {           
 
             using (WebClient client = new WebClient())
             {
-                Console.WriteLine("Contacting server...");
+                Console.WriteLine("Starting /api/GetDelayedResponse()...");
                 var message =  await client.DownloadStringTaskAsync(string.Concat(_apiUrl, seconds));
-                Console.WriteLine("Server response received.");
+                Console.WriteLine("GetDelayedResponse() complete.");
 
-                return message;
+                return message.Trim('"');
             }            
         }
 
-        // method to simualte a long running process in app code
+        // async method to simualte long running work in app code
         public async static Task<String> SimulateLongProcess(int s)
         {
-            Console.WriteLine("Simulating long process...");
+            Console.WriteLine("Starting SimulateLongProcess()...");
             await Task.Delay(s * 1000);
-            string data = "'Hello, world!'";
-            Console.WriteLine("Long process complete.");
+            string data = "Hello, world!";
+            Console.WriteLine("SimulateLongProcess() complete.");
 
             return data;
         }
 
-        // methods to simulate synchronous short running process in app code
+        // synchronous methods to simulate short running work in app code
         public static int Foo()
         {
             Console.WriteLine("Starting Foo()...");
