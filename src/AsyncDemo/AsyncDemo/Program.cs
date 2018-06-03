@@ -18,22 +18,22 @@ namespace AsyncDemo
             Task<string> dataA = SampleDataLayer.GetDelayedResponse(8);
             Task<string> dataB = SampleDataLayer.SimulateLongProcess(4);
 
-            // start synchronous work which doesn't need the result of dataA or dataB
+            // start synchronous work which doesn't need to wait for dataA or dataB
             int dataC = SampleDataLayer.Foo();
 
             // now call await on the tasks
             Console.WriteLine("Awaiting...");
-            SampleData data = new SampleData()
+            SampleData sample = new SampleData()
             {
                 A = await dataA,
                 B = await dataB,
                 C = dataC
             };
 
-            Console.WriteLine("SampleData obj created:");
-            Console.WriteLine("response.A = {0}", data.A);
-            Console.WriteLine("response.B = {0}", data.B);
-            Console.WriteLine("response.C = {0}", data.C);
+            Console.WriteLine("SampleData object created:");
+            Console.WriteLine("response.A = {0}", sample.A);
+            Console.WriteLine("response.B = {0}", sample.B);
+            Console.WriteLine("response.C = {0}", sample.C);
 
             Console.WriteLine("Complete.");
             Console.ReadLine();

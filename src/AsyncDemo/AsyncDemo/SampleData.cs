@@ -14,7 +14,7 @@ namespace AsyncDemo
 
             using (WebClient client = new WebClient())
             {
-                Console.WriteLine("Starting /api/GetDelayedResponse()...");
+                Console.WriteLine("Starting /api/GetDelayedResponse()");
                 var message =  await client.DownloadStringTaskAsync(string.Concat(_apiUrl, seconds));
                 Console.WriteLine("GetDelayedResponse() complete.");
 
