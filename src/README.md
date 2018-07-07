@@ -1,5 +1,3 @@
-## Adhoc
-
 #### AsyncDemo
 A simple demonstration of asynchronous programming with C#.
 
