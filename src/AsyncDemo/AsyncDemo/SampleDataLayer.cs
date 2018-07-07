@@ -7,38 +7,38 @@ namespace AsyncDemo
 {
     public static class SampleDataLayer
     {
-        const string _apiUrl = "http://mfcallahan.com/api/GetDelayedResponse?waitSeconds=";
+        const string _apiUrl = "http://mfcallahan-dev.com/api/GetDelayedResponse?waitSeconds=";
 
         // synchronous method to simulate a long running HTTP request
-        public static string GetDelayedResponse(int seconds)
+        public static string GetDelayedApiResponse(int seconds)
         {
             using (WebClient client = new WebClient())
             {
-                Console.WriteLine("Starting /api/GetDelayedResponse");
+                Console.WriteLine("GetDelayedApiResponse() start.");
                 var message = client.DownloadString(string.Concat(_apiUrl, seconds));
-                Console.WriteLine("/api/GetDelayedResponse complete.");
+                Console.WriteLine("GetDelayedApiResponse() complete.");
 
                 return message.Trim('"');
             }
         }
 
         // async method to simulate a long running HTTP request
-        public async static Task<string> GetDelayedResponseAsync(int seconds)
+        public async static Task<string> GetDelayedApiResponseAsync(int seconds)
         {
             using (WebClient client = new WebClient())
             {
-                Console.WriteLine("Starting async /api/GetDelayedResponse");
+                Console.WriteLine("GetDelayedApiResponseAsync() start.");
                 var message =  await client.DownloadStringTaskAsync(string.Concat(_apiUrl, seconds));
-                Console.WriteLine("async /api/GetDelayedResponse complete.");
+                Console.WriteLine("GetDelayedApiResponseAsync() complete.");
 
                 return message.Trim('"');
             }            
         }
 
-        // synchronous method to simualte long running work in application code
+        // synchronous method to simulate long running work in application code
         public static string SimulateLongProcess(int seconds)
         {
-            Console.WriteLine("Starting SimulateLongProcess()...");
+            Console.WriteLine("SimulateLongProcess() start.");
             Thread.Sleep(seconds * 1000);
             string data = "Hello, world!";
             Console.WriteLine("SimulateLongProcess() complete.");
@@ -46,10 +46,10 @@ namespace AsyncDemo
             return data;
         }
 
-        // async method to simualte long running work in application code
+        // async method to simulate long running work in application code
         public async static Task<string> SimulateLongProcessAsync(int seconds)
         {
-            Console.WriteLine("Starting SimulateLongProcessAsync()...");
+            Console.WriteLine("SimulateLongProcessAsync() start.");
             await Task.Delay(seconds * 1000);
             string data = "Hello, world!";
             Console.WriteLine("SimulateLongProcessAsync() complete.");
@@ -60,9 +60,10 @@ namespace AsyncDemo
         // synchronous methods to simulate short running work in application code
         public static int Foo()
         {
-            Console.WriteLine("Starting Foo()...");
+            Console.WriteLine("Foo() start.");
             int n = Bar(10);
             Console.WriteLine("Foo() complete.");
+
             return n;
         }
 
@@ -74,6 +75,13 @@ namespace AsyncDemo
 
     public class SampleData
     {
+        public SampleData(string dataA, string dataB, int dataC)
+        {
+            A = dataA;
+            B = dataB;
+            C = dataC;
+        }
+
         public string A { get; set; }
         public string B { get; set; }
         public int C { get; set; }

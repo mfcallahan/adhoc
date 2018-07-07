@@ -1,3 +1,3 @@
 # Adhoc
 
-### Miscellaneous code, scripts, and anything else useful enough to hang on to for a while.
+### Miscellaneous code, scripts, projects, etc. Feel free to browse, but code in this repo is not guaranteed to be stable (or good).
