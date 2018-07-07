@@ -1,34 +1,21 @@
-## Adhoc
+**AsyncDemo** - A simple demonstration of asynchronous programming with C#.
 
-###AsyncDemo
-A simple demonstration of asynchronous programming with C#.
+**bat** - batch files
 
-###FileUtils
-C# console app to clean up misc files and folders on my desktop.
+**FileUtils** C# - console app to clean up misc files and folders on my desktop.
 
-###LINQPad
-LINQPad code snippets
+**LINQPad** - LINQPad code snippets
 
-###Notepad++
-Custom notepad++ configs
+**Notepad++** - Custom notepad++ configs
 
-###Python
-Python scripts
+**Python** - Python scripts
 
-###QRZ
-QRZ.com bio page
+**QRZ** - QRZ.com bio page
 
-###RadioReference
-radioreference.com bio page
+**RadioReference** - radioreference.com bio page
 
-###ReactSample
-React.js sample tic-tac-toe app
+**ReactSample** - React.js sample tic-tac-toe app
 
-###ReduxSample
-Redux + React.js sample "todo" app
+**ReduxSample** - Redux + React.js sample "todo" app
 
-###RestDemp
-A C# console app to dump all features from an ArcGIS Online feature service
-
-###bat
-batch files
+**RestDemp** - A C# console app to dump all features from an ArcGIS Online feature service
