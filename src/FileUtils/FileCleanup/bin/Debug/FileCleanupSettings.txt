@@ -1,5 +1,0 @@
-﻿//Set folder to clean and max file age in days with values separated by comma
-//Example to delete all files older than 7 days from the Downloads folder:
-//C:\Users\UserName\Downloads,7
-
-C:\Temp,1
