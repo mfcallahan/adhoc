@@ -12,42 +12,14 @@
     <!-- Bootstrap styles -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
     <!-- map styles -->
+    <link rel="stylesheet" href="css/style.css" />
     <style>
-      #repeaterMap {
+      /* #repeaterMap {
         width: 100%;
         height: 100%;
         position: relative;
         overflow: hidden;
-      }
-      .pac-card {
-        position: absolute;
-        top: 10px;
-        left: 10px;
-        z-index: 5;
-        border-radius: 2px 0 0 2px;
-        box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        outline: none;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-        background-color: #fff;
-        font-family: Roboto;
-        z-index: 3;
-      }
-      #pac-container {
-        padding-bottom: 12px;
-        margin-right: 12px;
-      }
-      .pac-controls {
-        display: inline-block;
-        padding: 5px 11px;
-      }
-      .pac-controls label {
-        font-family: Roboto;
-        font-size: 13px;
-      }
-      #pac-input:focus {
-        border-color: #0077bb;
-      }
+      } */
     </style>
   </head>
   <body>
@@ -91,7 +63,7 @@
       </div>
     </div>
     <!-- map -->
-    <div id="repeaterMap"></div>
+    <div id="map"></div>
 
     <!-- Leaflet scripts -->
     <script
@@ -146,11 +118,18 @@
           })
         );
 
-        map = L.map('repeaterMap', {
+        map = L.map('map', {
           center: [33.434, -112.01],
           zoom: 10,
-          layers: mapLayers[0]
+          layers: mapLayers[0],
+          zoomControl: false
         });
+
+        L.control
+          .zoom({
+            position: 'bottomright'
+          })
+          .addTo(map);
       }
 
       function setupLayerControls() {}
