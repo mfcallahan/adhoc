@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FileBackup
 {
@@ -14,7 +12,7 @@ namespace FileBackup
      */
 
 
-    class Program
+    static class Program
     {
         static List<string> noSource = new List<string>();
         static List<string> notCopied = new List<string>();
@@ -24,10 +22,9 @@ namespace FileBackup
         static List<string> ignoreExts = new List<string>();
         static List<string> ignoreFiles = new List<string>();       
 
-        static void Main()
+        static void Main(string[] args)
         {
-            Console.WriteLine("FileBackup.exe begin.");
-            Console.WriteLine();
+            Console.WriteLine("FileBackup.exe begin." + Environment.NewLine);
 
             var folders = ConfigurationManager.AppSettings.AllKeys
                             .Where(key => key.StartsWith("backupFolder", StringComparison.Ordinal))
