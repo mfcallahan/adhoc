@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FileUtils
+namespace FolderCleanup
 {
     class Program
     {
