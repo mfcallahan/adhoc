@@ -123,3 +123,6 @@ node_modules/
 # Rider
 .idea/
 
+# log files
+*.log
+
