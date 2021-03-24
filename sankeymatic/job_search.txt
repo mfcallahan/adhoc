@@ -1,0 +1,16 @@
+' Type a list of Flows, like this:
+'     SOURCE [AMOUNT] TARGET
+
+Jobs applied to [186] No response
+Jobs applied to [70] Rejection
+Jobs applied to [3] Application withdrawn
+Jobs applied to [50] Replies
+Replies [21] Initial Interviews
+Initial Interviews [1] Rejected
+Initial Interviews [6] Pass
+Initial Interviews [14] Full Interviews
+Full Interviews [2] Passed
+Full Interviews [2] Job Offers
+Full Interviews [9] No Offer
+Job Offers [1] Accepted
+
