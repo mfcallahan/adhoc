@@ -1,20 +1,23 @@
-# Delete all files older than n days in a specified folder.
+#!/usr/bin/python3.8 python
 
+# Delete all files in a folder which are older than the specified number days.
+# Deploy:
+# cp -u folder_cleanup.py /home/matt/Scripts
 import os
 import logging
 import datetime
 from types import SimpleNamespace
 
+cleanupFolders = [
+    SimpleNamespace(path = '/home/matt/Temp', days = 7, errors = []),
+    SimpleNamespace(path = '/home/matt/Download', days = 30, errors = []),
+    SimpleNamespace(path = '/home/matt/Desktop' ,days = 1, errors = [])
+]
+
 def main():
-    # name the log file as "{this_script_filename}.log"
+    # name the log file as "{this_filename}.log"
     logFileName = f'{os.path.splitext(os.path.basename(__file__))[0]}.log'
     configureLogger(logFileName)
-
-    cleanupFolders = [
-        SimpleNamespace(path = '/home/matt/Temp', days = 7, errors = []),
-        SimpleNamespace(path = '/home/matt/Download', days = 30, errors = []),
-        SimpleNamespace(path = '/home/matt/Desktop' ,days = 1, errors = [])
-    ]
 
     for folder in cleanupFolders:
         deleteFilesInFolder(folder)
@@ -24,11 +27,12 @@ def main():
             for error in folder.errors:
                 logging.error(error)
 
-    logging.info(f'Folder cleanup complete at {datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")}.')
+    logging.info(f'Folder cleanup complete at {datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")}.')
 
-def configureLogger(file):
+# configure logging to write to file, overwriting the log file contents each time
+def configureLogger(logFileName):
     logging.basicConfig(
-        filename=file,
+        filename=logFileName,
         filemode='w',
         format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
         datefmt='%m/%d/%Y %H:%M:%S',
