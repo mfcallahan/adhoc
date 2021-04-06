@@ -1,8 +1,8 @@
-#!/usr/bin/python3.8 python
-
 # Delete all files in a folder which are older than the specified number days.
+
 # Deploy:
 # cp -u folder_cleanup.py /home/matt/Scripts
+
 import os
 import logging
 import datetime
@@ -11,7 +11,7 @@ from types import SimpleNamespace
 cleanupFolders = [
     SimpleNamespace(path = '/home/matt/Temp', days = 7, errors = []),
     SimpleNamespace(path = '/home/matt/Download', days = 30, errors = []),
-    SimpleNamespace(path = '/home/matt/Desktop' ,days = 1, errors = [])
+    SimpleNamespace(path = '/home/matt/Desktop', days = 1, errors = [])
 ]
 
 def main():
@@ -29,11 +29,10 @@ def main():
 
     logging.info(f'Folder cleanup complete at {datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")}.')
 
-# configure logging to write to file, overwriting the log file contents each time
 def configureLogger(logFileName):
     logging.basicConfig(
         filename=logFileName,
-        filemode='w',
+        filemode='w', # overwrite the log file contents each time
         format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
         datefmt='%m/%d/%Y %H:%M:%S',
         level=logging.DEBUG
