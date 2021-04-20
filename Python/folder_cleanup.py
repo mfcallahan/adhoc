@@ -27,7 +27,7 @@ def main():
             for error in folder.errors:
                 logging.error(error)
 
-    logging.info(f'Folder cleanup complete at {datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")}.')
+    logging.info('Folder cleanup complete.')
 
 def configureLogger(logFileName):
     logging.basicConfig(
@@ -37,6 +37,9 @@ def configureLogger(logFileName):
         datefmt='%m/%d/%Y %H:%M:%S',
         level=logging.DEBUG
     )
+
+    if os.path.exists(logFileName):
+        os.remove(logFileName)
 
 def deleteFilesInFolder(cleanupFolder):
     now = datetime.datetime.now()

@@ -1,21 +1,18 @@
-# Copy all files from a specified source folder in the Home directory to a specified destination folder for backup
+# Copy all files from a specified source folder to a specified destination folder for backup
 # purposes. If a file exists in the destination folder but not the source folder, it is deleted.
 
 # Deploy:
 # cp -u home_folder_backup.py /home/matt/Scripts
 
 import os
-import glob
 import logging
 import datetime
-from datetime import datetime
 from types import SimpleNamespace
 from shutil import copyfile
-from pathlib import Path
 
 foldersToBackup = [
     SimpleNamespace(sourcePath = '/home/matt/Documents', backupPath = '/mnt/XtraDisk/OneDrive/Mint_Backup/Documents', errors = []),
-    SimpleNamespace(sourcePath = '/home/matt/Pictures', backupPath = '/mnt/XtraDisk/OneDrive/Mint_Backup/Pictures',errors = [])
+    SimpleNamespace(sourcePath = '/home/matt/Pictures', backupPath = '/mnt/XtraDisk/OneDrive/Mint_Backup/Pictures', errors = [])
 ]
 
 def main():
@@ -29,7 +26,7 @@ def main():
         # log each error to file
         [logging.error(error) for error in folder.errors if len(folder.errors) > 0]
 
-    logging.info(f'Folder backup complete at {datetime.now().strftime("%d-%m-%Y %H:%M:%S")}.')
+    logging.info('Folder backup complete.')
 
 def configureLogger(logFileName):
     logging.basicConfig(
