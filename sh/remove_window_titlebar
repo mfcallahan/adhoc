@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# Remove the GNOME window titlebar
+# example usage: ./remove_windows_titlebar "Some Window Name"
+xprop -name "$1" -format _MOTIF_WM_HINTS 32c -set _MOTIF_WM_HINTS 2
+
