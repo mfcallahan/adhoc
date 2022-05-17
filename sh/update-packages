@@ -1,0 +1,5 @@
+#!/bin/bash
+
+echo "Updating Aptitude and Flatpak packages..."
+sudo apt update && sudo apt upgrade && flatpak update
+
